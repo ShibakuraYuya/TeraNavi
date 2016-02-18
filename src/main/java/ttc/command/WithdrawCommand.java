@@ -7,21 +7,18 @@ import ttc.util.MySqlConnectionManager;
 
 import ttc.exception.integration.IntegrationException;
 import ttc.exception.business.BusinessLogicException;
+import ttc.exception.business.PasswordInvalidException;
 
 import java.util.Map;
 import java.util.HashMap;
-import java.util.List;
-import java.util.ArrayList;
-
-import java.util.Calendar;
-import java.text.SimpleDateFormat;
 
 import ttc.util.factory.AbstractDaoFactory;
 import ttc.dao.AbstractDao;
 import ttc.bean.UserBean;
+
 import ttc.exception.business.ParameterInvalidException;
 
-public class WriteChatCommand extends AbstractCommand{
+public class WithdrawCommand extends AbstractCommand{
 
 
     public ResponseContext execute(ResponseContext resc)throws BusinessLogicException{
@@ -29,37 +26,30 @@ public class WriteChatCommand extends AbstractCommand{
             RequestContext reqc = getRequestContext();
 
             String userId=reqc.getParameter("userId")[0];
-            String topicId=reqc.getParameter("topicId")[0];
-            String chatBody=reqc.getParameter("chatBody")[0];
-
-            Calendar c = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-            String date=sdf.format(c.getTime());
-
-            String chatDeleteFlag="0";
 
             Map params = new HashMap();
-            params.put("userId",userId);
-            params.put("topicId",topicId);
-            params.put("chatBody",chatBody);
-            params.put("chatDate",date);
-            params.put("chatDeleteFlag",chatDeleteFlag);
+            params.put("value",userId);
+            params.put("where","where user_id=?");
+
 
             MySqlConnectionManager.getInstance().beginTransaction();
-            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("chat");
+            AbstractDaoFactory factory = AbstractDaoFactory.getFactory("users");
             AbstractDao dao = factory.getAbstractDao();
-            dao.insert(params);
-
-            List result = new ArrayList();
-            result = dao.readAll(params);
-
+            UserBean ub = (UserBean)dao.read(params);
+			
+			params.put("userbean",ub);
+			params.put("userStatus", "3");
+			params.put("userId",ub.getId());
+			dao.update(params);
+			
             MySqlConnectionManager.getInstance().commit();
             MySqlConnectionManager.getInstance().closeConnection();
+			
+			resc.setTarget("withdrawResult");
 
-            resc.setResult(result);
-            //resc.setTarget("showchat");
+			return resc;
 
-            return resc;
+
         }catch(NullPointerException e){
 			throw new ParameterInvalidException("入力内容が足りません", e);
 		}catch(IntegrationException e){
