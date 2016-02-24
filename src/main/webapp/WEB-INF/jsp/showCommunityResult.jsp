@@ -35,15 +35,13 @@
 
     <jsp:include page="/WEB-INF/jsp/header.jsp"/>
     <form action="commSetting" method="post" id="setting" >
+
+    <img src="${result.headerPath}" id="headimg">
+    <label for="headerFile" id="headerPath">
+            <input type="file" id="headerFile" style="display:none">
+    </label>
+
     <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <img src="${result.headerPath}" style="width:100%; height:250px" id="headimg">
-                    <label for="headerFile" id="headerPath">
-                            <input type="file" id="headerFile" style="display:none">
-                    </label>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-5">
@@ -54,10 +52,10 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <span id="iconPath">
-                        <img id="icon" src="${result.iconPath}" style="width:130px; height:130px; position:relative; bottom:110px; margin-left:50px;">
-                        <input type="file" value="アイコン画像を選択" id="iconFile" style="display: none">
-                    </span>
+                        <img id="icon" src="${result.iconPath}" style="width:130px; height:130px; position:relative; bottom:110px; margin-left:50px;"></img>
+                            <label for="iconFile" id="iconPath">
+                                    <input type="file" id="iconFile" style="display:none">
+                            </label>
                 </div>
             </div>
             <c:if test="${sessionScope.loginUser.id eq result.createUserId}">
@@ -161,21 +159,24 @@
                     </div>
 
                    <div class="modal-body">
-                       <div class="col-xs-1"></div>
-                       <div class="col-xs-10">
-                           <h2>コミュニティ名</h2><h5 id="modalName"></h5>
-                           <h2>説明文</h2><h5 id="modalProfile"></h5>
-                           <h2>ヘッダー画像</h2><img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"
-                           class="img-rounded" width="200" height="150" id="commHeader">
-                             <h2>アイコン画像</h2><img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png"
-                             class="center-block img-circle img-responsive" width="150" height="150" id="commIcon">
-
+                       <div class="row">
+                           <div class="col-md-1"></div>
+                           <div class="col-md-10">
+                               <h2>コミュニティ名</h2>
+                               <h5 id="modalName"></h5>
+                               <h2>説明文</h2>
+                               <h5 id="modalProfile"></h5>
+                               <h2>ヘッダー画像</h2>
+                               <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png" class="img-rounded" width="450" height="150" id="commHeader">
+                               <h2>アイコン画像</h2>
+                               <img src="http://pingendo.github.io/pingendo-bootstrap/assets/user_placeholder.png" class="img-thumbnail" width="110" height="150" id="commIcon">
+                           </div>
+                           <div class="col-md-1"></div>
                        </div>
                    </div>
-
                    <div class="modal-footer">
-                       <button type="submit" class="btn btn-block btn-primary" form="setting">設定する</button>
-                       <button type="button" class="btn btn-block btn-primary" data-dismiss="modal">キャンセル</button>
+                       <button type="submit" class="btn btn-primary" form="setting">設定する</button>
+                       <button type="button" class="btn btn-primary" data-dismiss="modal">キャンセル</button>
                    </div>
                  </div>
                </div>
@@ -211,13 +212,13 @@
                 var button=$('#editButton');
 
                 $("#name").html('<input type="text" class="form-control" name="commName" value="'+name.text()+'" id="commName" maxlength="25"><br>');
-                $("#name").css('background-color','transparent');
-                $("#name").css('font-size','8px');
+                $("#name").css("background-color","");
                 $("#profile").html('<textarea class="form-control" id="profile" rows="4" name="commProfile">'+profile+'</textarea>');
-                $("#headerPath").append("<p class=\"changeEffectHead\">ヘッダー画像を選択</p>");
+                $("#headerPath").append('<p id="headerText">ヘッダー画像を選択</p>');
                 $("#headerPath").addClass("changeEffectHead");
                 // $("#headimg").addClass("changeEffectHead");
-                $("#icon").removeClass().addClass("changeEffectIcon");
+                $("#iconPath").append('<p id="changeEffectIconText">アイコン画像を選択</p>');
+                $("#iconPath").addClass("changeEffectIcon");
 
                 // $("#iconFile").show();
                 $("#iconFile").append('<input id="comIconPath" type="hidden" name="iconPath">');

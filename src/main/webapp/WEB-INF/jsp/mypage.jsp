@@ -19,7 +19,40 @@
     <jsp:include page="/WEB-INF/jsp/header.jsp"/>
 
     <%-- トップのナビゲーションを読み込み --%>
-    <jsp:include page="/WEB-INF/jsp/topnav.jsp"/>
+    <div class="section">
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-10 col-xs-offset-1">
+              <ul class="lead nav nav-justified nav-tabs">
+                <li>
+                  <a href="/TeraNavi/front/top" class="text-warning">TOP</a>
+                </li>
+                <li>
+                  <a href="/TeraNavi/front/top#blog" class="text-warning">ブログ</a>
+                </li>
+                <li>
+                  <a href="/TeraNavi/front/top#community" class="text-warning">コミュニティ</a>
+                </li>
+                <li>
+                  <a href="/TeraNavi/front/top#tag" class="text-warning">タグ</a>
+                </li>
+    <c:choose>
+    <c:when test="${sessionScope.loginUser.id eq result.user.id}">
+                <li class="active">
+                  <a href="/TeraNavi/front/mypage?paramUserId=${sessionScope.loginUser.id}" class="text-warning">マイページ</a>
+                </li>
+    </c:when>
+    <c:otherwise>
+                <li>
+                  <a href="/TeraNavi/front/mypage?paramUserId=${sessionScope.loginUser.id}" class="text-warning">マイページ</a>
+                </li>
+    </c:otherwise>
+    </c:choose>
+              </ul>
+            </div>
+          </div>
+        </div>
+    </div>
 
     <div class="section">
         <div class="container">
@@ -86,23 +119,32 @@
                                 </c:forEach>
                               </tbody>
                             </table>
-                            <a href="/TeraNavi/front/showArticleList?writeUserId=${sessionScope.loginUser.id}" class="btn btn-warning pull-right">もっと見る</a>　
+                            <a href="/TeraNavi/front/showArticleList?writeUserId=${sessionScope.loginUser.id}&scope=-1" class="btn btn-warning pull-right">もっと見る</a>　
                             <br>
                             <br>
                             <br>
                             <h1 class="text-warning">参加中のコミュニティ</h1>
                             <table class="table table-striped">
                               <tbody>
-                                <tr>
-                                  <td>
-                                    <img src="https://unsplash.imgix.net/photo-1421986527537-888d998adb74?w=1024&amp;q=50&amp;fm=jpg&amp;s=e633562a1da53293c4dc391fd41ce41d"
-                                    style="width:50px;height:50px;">
-                                  </td>
-                                  <td>コミュにティ名</td>
-                                  <td>
-                                    <a class="btn btn-danger pull-right">退会</a>
-                                  </td>
-                                </tr>
+								  <c:forEach var="community" items="${sessionScope.myCommunities}">
+									<tr>
+										<td>
+										  <img src="${community.iconPath}"
+										  style="width:50px;height:50px;">
+										</td>
+										<td>${community.name}</td>
+										<td>
+										<form action="/TeraNavi/front/withDrawComm" method="post" name="showDel">
+											<input type="hidden" name="commId" value="${community.id}">
+											<input type="hidden" name="commName" value="${community.name}">
+											<input type="hidden" name="target" value="community_withdrawal_flag=1">
+											<button type="submit" class="btn btn-danger pull-right">退会</button>
+										</form>
+										</td>
+									</tr>
+									  
+								  </c:forEach>
+								  
                               </tbody>
                             </table>
                             <a class="btn btn-warning pull-right">もっと見る</a>
@@ -114,7 +156,7 @@
                     </div>
                     <div class="col-sm-3 col-xs-6">
          			   <a href="/TeraNavi/blogDelete">ブログ閉鎖</a><br><br>
-                        <a href="/TeraNavi/createcomm">コミュニティの作成</a><br><br>
+
                         <a href="/TeraNavi/joincomm">コミュニティの参加</a><br><br>
                         <a href="#" onclick="document.comForm.submit();">コミュニティ一覧</a>
                         <form action="/TeraNavi/front/commList" method="post" name="comForm">
