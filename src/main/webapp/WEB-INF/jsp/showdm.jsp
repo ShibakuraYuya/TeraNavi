@@ -33,6 +33,9 @@
                     <th>内容</th>
                     <th>受信日時</th>
                     <th>送信元</th>
+                    <th>
+                        返信
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -41,11 +44,15 @@
                     <td> <c:out value="${dm.messageBody}"/> </td>
                     <td> <c:out value="${dm.date}" /> </td>
                     <td> <c:out value="${dm.fromUserName}"/> </td>
+                    <td><form action="dmsend" method="post">
+                        &nbsp;&nbsp;本文:<input type="text" name="messageBody"><br>
+                        <input type="hidden" name="receiveUserId" value="${dm.fromUserId}">
+                        <input type="submit" value="送信"><br><br>
+                    </form></td>
                 </tr>
                 </c:forEach>
             </tbody>
         </table>
-
        </div><!--end row-->
     </div><!--end container-->
     <jsp:include page="/WEB-INF/jsp/footer.jsp"/>

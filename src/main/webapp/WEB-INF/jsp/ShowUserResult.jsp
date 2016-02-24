@@ -24,7 +24,7 @@
 	<h5 class="page-title">検索結果</h5>
     <hr id="hr" class="hr">
     <p class="p-level">ユーザの検索結果です</p>
-    
+
     <br>
     <div class="section">
       <div class="container">
@@ -45,12 +45,12 @@
 				</p>
 			  </div>
 			</div>
-			
-			
+
+
 	   	</c:forEach>
       </div>
     </div>
-	
+
     <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 
 

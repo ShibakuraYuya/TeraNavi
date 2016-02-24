@@ -20,8 +20,8 @@
    position: relative;
    background: #FF9933;
    height: auto;
-   min-width:20px;
-   max-width:400px;
+   min-width:100px;
+   max-width:300px;
    margin-bottom: 20px;
    border-radius: 50px;
    color:#fff;
@@ -30,8 +30,8 @@
 	display: inline-block;
 	position: relative;
 	background: #EEEEEE;
-	max-width:400px;
-	min-width:20px;
+	max-width:300px;
+	min-width:100px;
 	height:auto;
 	margin-bottom: 20px;
 	border-radius: 50px;
@@ -209,9 +209,11 @@
 }
 .username{
 	left:5px;
+	font-weight: bold;
 
 }
 .Myusername{
-	margin-left:78%;
+	font-weight: bold;
+	margin-left:70%;
 	margin-top:-18px;
 }

@@ -22,13 +22,13 @@ public class ShowDirectMessageListCommand extends AbstractCommand{
             RequestContext reqc = getRequestContext();
 
             String userId = reqc.getParameter("userId")[0];
-			
+
             MySqlConnectionManager.getInstance().beginTransaction();
 
 			Map params = new HashMap();
 			params.put("receiveUserId",userId);
 			params.put("group","true");
-			
+
             AbstractDaoFactory factory = AbstractDaoFactory.getFactory("dm");
             AbstractDao dao = factory.getAbstractDao();
             List results = dao.readAll(params);

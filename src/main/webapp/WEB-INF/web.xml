@@ -44,8 +44,6 @@
       <url-pattern>/chat</url-pattern>
    </servlet-mapping>
 
-
-
    <servlet>
       <servlet-name>FrontServlet</servlet-name>
       <servlet-class>ttc.FrontServlet</servlet-class>
