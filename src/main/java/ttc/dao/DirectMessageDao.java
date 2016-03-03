@@ -37,12 +37,13 @@ public class DirectMessageDao implements AbstractDao{
 
             sql.append("select message_id,message_body,message_date," );
             sql.append("fk_send_user_id,fk_receive_user_id,user_name ");
-            sql.append("from direct_messages join users on user_id=fk_send_user_id ");
+            sql.append("from direct_messages join users on user_id=fk_send_user_id");
             sql.append("where fk_receive_user_id=?");
 
 			boolean flag = map.containsKey("sendUserId");
 			if(flag){
 				sql.append(" and fk_send_user_id=?");
+                sql.append(" OR fk_receive_user_id = ? and fk_send_user_id = ?");
 			}
 
 			if(map.containsKey("group")){
@@ -56,6 +57,8 @@ public class DirectMessageDao implements AbstractDao{
 
 			if(flag){
 				pst.setString(2,(String)map.get("sendUserId"));
+                pst.setString(3,(String)map.get("sendUserId"));
+                pst.setString(4,(String)map.get("receiveUserId"));
 			}
 
             ResultSet rs = pst.executeQuery();

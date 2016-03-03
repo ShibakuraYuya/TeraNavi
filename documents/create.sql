@@ -131,7 +131,8 @@ create table tera_db.direct_messages(
 	message_body varchar(800),
 	message_date datetime not null,
 	fk_send_user_id int(8),
-	fk_receive_user_id int(10),index(message_id),
+	fk_receive_user_id int(10),
+	index(message_id),
 	foreign key(fk_send_user_id) references tera_db.users(user_id),
 	foreign key(fk_receive_user_id) references tera_db.users(user_id)
 )engine=InnoDB;

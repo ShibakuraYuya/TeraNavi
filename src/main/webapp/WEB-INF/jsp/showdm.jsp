@@ -19,6 +19,10 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- <script type="text/javascript">
+        var userId = '<%=request.getAttribute("result") %>';
+        console.log(userId);
+    </script> -->
 </head>
 <body>
     <%-- ヘッダー部分のHTMLを読み込み --%>
@@ -44,16 +48,20 @@
                     <td> <c:out value="${dm.messageBody}"/> </td>
                     <td> <c:out value="${dm.date}" /> </td>
                     <td> <c:out value="${dm.fromUserName}"/> </td>
-                    <td><form action="dmsend" method="post">
-                        &nbsp;&nbsp;本文:<input type="text" name="messageBody"><br>
-                        <input type="hidden" name="receiveUserId" value="${dm.fromUserId}">
-                        <input type="submit" value="送信"><br><br>
-                    </form></td>
+                    <td><input type="hidden" name="receiveUserId" value="${dm.fromUserId}" form="sendDM"></td>
                 </tr>
                 </c:forEach>
             </tbody>
         </table>
        </div><!--end row-->
+       <div class="row">
+           <div class="col-md-12">
+               <form id="sendDM" action="dmsend" method="post">
+                   &nbsp;&nbsp;本文:<input type="text" name="messageBody"><br>
+                   <input type="submit" value="送信"><br><br>
+               </form>
+           </div>
+       </div>
     </div><!--end container-->
     <jsp:include page="/WEB-INF/jsp/footer.jsp"/>
 </body>
