@@ -46,7 +46,7 @@
                     <c:choose>
                         <c:when test="${sessionScope.loginUser.blogStatus eq 1}">
                             <div class="col-md-1"></div>
-                            <h1>ブログ設定</h1>
+                            <h1>ブログ設定<a class="btn btn-danger" href="/TeraNavi/blogDelete" role="button" style="margin-left: 26.5%;">ブログ閉鎖</a></h1>
                             <form id="blogSetting" action="/TeraNavi/front/blogSetting" method="post">
                                 <input id="status" type="hidden" name="status" value="1">
                         </c:when>
@@ -202,6 +202,37 @@
  				ajax = $.ajax(ajaxSettings);
 			}
 		}
+
+        function fileUpIcon(){
+			var files = document.getElementById("iconFile").files;
+
+			for(var i = 0;i < files.length;i++){
+				console.log("for");
+				var f = files[i];
+				var formData = new FormData();
+				formData.append("file",f);
+				ajaxSettings.data = formData;
+				ajaxSettings.url = "/TeraNavi/upload";
+				ajaxSettings.success = function(data){
+					$("#comIconPath").val(data.result);
+					$("#icon").attr("src", data.result);
+				}
+
+ 				ajax = $.ajax(ajaxSettings);
+			}
+
+		}
+
+        $(document).on("change","#iconFile",function(){
+            var file = this.files[0];
+            // ブラウザごとの違いをフォローする
+            window.URL = window.URL || window.webkitURL ;
+
+            // Blob URLの作成
+            src = window.URL.createObjectURL( file ) ;
+
+            fileUpIcon();
+        });
 
 	</script>
 

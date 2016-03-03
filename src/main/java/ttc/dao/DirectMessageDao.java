@@ -37,7 +37,7 @@ public class DirectMessageDao implements AbstractDao{
 
             sql.append("select message_id,message_body,message_date," );
             sql.append("fk_send_user_id,fk_receive_user_id,user_name ");
-            sql.append("from direct_messages join users on user_id=fk_send_user_id");
+            sql.append("from direct_messages join users on user_id=fk_send_user_id ");
             sql.append("where fk_receive_user_id=?");
 
 			boolean flag = map.containsKey("sendUserId");
